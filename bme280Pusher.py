@@ -36,10 +36,10 @@ class MockSensor:
 
 def readValues(sensor):
     return OrderedDict(dict(
-            temperature       = {'value':sensor.read_temperature(),       'unit':'*C'},
-            pressure          = {'value':sensor.read_pressure(),          'unit':'Pa'},
-            altitude          = {'value':sensor.read_altitude(),          'unit':'m'},
-            sealevel_pressure = {'value':sensor.read_sealevel_pressure(), 'unit':'Pa'}
+            temperature       = {'value':sensor.read_temperature(),   'unit':'*C'},
+            pressure          = {'value':sensor.read_pressure(),      'unit':'Pa'},
+            humidity          = {'value':sensor.read_humidity(),      'unit':'%'},
+            timestamp         = {'value':sensor.t_fine,               'unit':''}
            ))
 
 def jsonFormatter(values):
@@ -78,8 +78,8 @@ if __name__ == '__main__':
                          formatter=getFormatter(sys.argv[3]))
 
     elif len(sys.argv) == 5:
-        import Adafruit_BMP.BMP085 as BMP085
-        sensor = BMP085.BMP085(busnum=int(sys.argv[4]))
+        from Adafruit_BME280 import *
+        sensor = BME280(mode=BME280_OSAMPLE_8, busnum=2)
         pushSensorValues(sensor=sensor,
                          url=sys.argv[1], 
                          freqMs=int(sys.argv[2]),
