@@ -21,7 +21,7 @@ class MockSensor:
         return self.pressure
             
     def read_humidity(self):
-        self.humidty = self.randomVal(40.0, self.humidity)
+        self.humidity = self.randomVal(40.0, self.humidity)
         self.t_fine += 1 # Hack to advance t_fine counter before it's acess by readValues
         return self.humidity
             
