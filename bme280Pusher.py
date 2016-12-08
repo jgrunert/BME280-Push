@@ -9,8 +9,8 @@ from collections import OrderedDict
 class MockSensor:
     temp = 20.0
     pressure = 1000.0
-    alti = 150.0
-    sea_alti = 1.0
+    humidity = 40.0
+    t_fine = 0
     
     def read_temperature(self):
         self.temp = self.randomVal(20.0,self.temp)
@@ -20,13 +20,10 @@ class MockSensor:
         self.pressure = self.randomVal(1000.0, self.pressure)
         return self.pressure
             
-    def read_altitude(self):
-        self.alti = self.randomVal(150.0, self.alti)
-        return self.alti
-                
-    def read_sealevel_pressure(self):
-        self.sea_alti = self.randomVal(1.0, self.sea_alti)
-        return self.sea_alti
+    def read_humidity(self):
+        self.humidty = self.randomVal(40.0, self.humidity)
+        self.t_fine += 1 # Hack to advance t_fine counter before it's acess by readValues
+        return self.humidity
             
     def randomVal(self, avg, current):
         if random.random() * (current/avg) > 0.5:
